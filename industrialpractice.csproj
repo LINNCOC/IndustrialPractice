@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{42CE3987-8F52-47EA-A9B9-CBC7C1D3F4DD}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>industrialpractice</RootNamespace>
+    <AssemblyName>industrialpractice</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\ConsoleHelper.cs" />
+    <Compile Include="Common\ITask.cs" />
+    <Compile Include="Common\TaskInfoAttribute.cs" />
+    <Compile Include="Menu\LevelMenu.cs" />
+    <Compile Include="Menu\MenuRunner.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tasks\Level1\Task01_HelloWorld.cs" />
+    <Compile Include="Tasks\Level1\Task02_Primitives.cs" />
+    <Compile Include="Tasks\Level1\Task03_Calculator.cs" />
+    <Compile Include="Tasks\Level1\Task04_ParityCheck.cs" />
+    <Compile Include="Tasks\Level1\Task05_MultiplicationTable.cs" />
+    <Compile Include="Tasks\Level1\Task06_DigitsSum.cs" />
+    <Compile Include="Tasks\Level1\Task07_StringReverse.cs" />
+    <Compile Include="Tasks\Level1\Task08_FizzBuzz.cs" />
+    <Compile Include="Tasks\Level1\Task09_ArrayOperations.cs" />
+    <Compile Include="Tasks\Level1\Task10_BubbleSorting.cs" />
+    <Compile Include="Tasks\Level1\Task11_MatrixDiagonal.cs" />
+    <Compile Include="Tasks\Level1\Task12_Palindrome.cs" />
+    <Compile Include="Tasks\Level1\Task13_WordCounter.cs" />
+    <Compile Include="Tasks\Level1\Task14_AgeCalculator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Tasks\Level2\" />
+    <Folder Include="Tasks\Level3\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
