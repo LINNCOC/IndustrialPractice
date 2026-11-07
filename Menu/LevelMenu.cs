@@ -26,6 +26,11 @@ namespace industrialpractice.Menu
                 Console.WriteLine("8. FizzBuzz 1–100");
                 Console.WriteLine("9. Массивы: min/max/sum/avg");
                 Console.WriteLine("10. Сортировка пузырьком + вставками");
+                Console.WriteLine("11. Диагональ матрицы N×N");
+                Console.WriteLine("12. Палиндром (без учёта регистра/пробелов)");
+                Console.WriteLine("13. Счётчик вхождений слов");
+                Console.WriteLine("14. Возраст по дате рождения");
+                Console.WriteLine("15. Git: локальный репозиторий");
 
                 Console.WriteLine("0. Назад");
                 Console.WriteLine("\nВыберите номер");
@@ -57,6 +62,17 @@ namespace industrialpractice.Menu
                     case "9": RunTask(new Task09_ArrayOperations());
                         break;
                     case "10": RunTask(new Task10_BubbleSorting());
+                        break;
+                    case "11": RunTask(new Task11_MatrixDiagonal());
+                        break;
+                    case "12": RunTask(new Task12_Palindrome());
+                        break;
+                    case "13": RunTask(new Task13_WordCounter());
+                        break;
+                    case "14": RunTask(new Task14_AgeCalculator());
+                        break;
+                    case "15": Console.WriteLine("Задание 15 выполнено через Git. См. файл git-notes.md.");
+                        Console.ReadKey();
                         break;
                 }
 
