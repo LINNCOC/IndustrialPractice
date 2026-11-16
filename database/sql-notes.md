@@ -268,3 +268,48 @@ ORDER BY AvgSalary DESC;
 
 Вывод
 * Освоил GROUP BY для группировки строк по столбцу DepartmentId. Понял, как работают агрегатные функции в сочетании с группировкой, и как сортировать результат по вычисляемому столбцу (AvgSalary DESC).
+
+## Task 07 — GROUP BY + HAVING: фильтрация групп
+
+### SQL
+
+```sql
+USE PracticeDB;
+GO
+
+-- 1. Отделы, в которых больше 2 сотрудников
+SELECT DepartmentId, COUNT(*) AS EmployeeCount
+FROM Employees
+GROUP BY DepartmentId
+HAVING COUNT(*) > 2;
+
+-- 2. Отделы со средней зарплатой > 55000
+SELECT DepartmentId, ROUND(AVG(Salary), 2) AS AvgSalary
+FROM Employees
+GROUP BY DepartmentId
+HAVING AVG(Salary) > 55000;
+
+-- 3. Отделы с суммарной зарплатой > 150000
+SELECT DepartmentId, SUM(Salary) AS TotalSalary
+FROM Employees
+GROUP BY DepartmentId
+HAVING SUM(Salary) > 150000;
+```
+
+Результат
+
+* Отделы, в которых больше 2 сотрудников:
+* Отдел 1 (Разработка) — 4 сотрудника
+* Отдел 2 (Аналитика) — 3 сотрудника
+
+* Отделы со средней зарплатой > 55000:
+* Отдел 1 (Разработка) — 60 000.00
+* Отдел 2 (Аналитика) — 57 000.00
+* Отдел 4 (Менеджмент) — 90 000.00
+
+* Отделы с суммарной зарплатой > 150000:
+* Отдел 1 (Разработка) — 240 000.00
+* Отдел 2 (Аналитика) — 171 000.00
+
+Вывод
+* Освоил HAVING. Главное отличие от WHERE: WHERE фильтрует отдельные строки до группировки, а HAVING фильтрует уже сгруппированные данные (например, группы по отделам). В HAVING можно использовать агрегатные функции (COUNT, AVG, SUM).
