@@ -353,3 +353,28 @@ ORDER BY d.DepartmentName ASC, e.Salary DESC;
 
 Вывод
 * Освоил INNER JOIN для объединения двух таблиц по общему ключу (DepartmentId). Понял, что INNER JOIN возвращает только те строки, где есть совпадение в обеих таблицах. Также закрепил сортировку по двум столбцам: сначала по названию отдела, затем по зарплате внутри отдела.
+
+## Task 09 — LEFT JOIN: сотрудники без проектов
+
+### SQL
+
+```sql
+USE PracticeDB;
+GO
+
+SELECT 
+    e.EmployeeId, 
+    e.EmployeeName
+FROM Employees e
+LEFT JOIN EmployeeProjects ep ON e.EmployeeId = ep.EmployeeId
+WHERE ep.EmployeeId IS NULL;
+```
+
+Результат
+
+Сотрудники без проектов:
+* 3 — Мария Кузнецова
+* 9 — Наталья Соколова
+
+Вывод
+* Освоил LEFT JOIN. В отличие от INNER JOIN, он возвращает все строки из левой таблицы (Employees), даже если для них нет совпадений в правой таблице (EmployeeProjects). Сотрудники без проектов получают NULL в полях правой таблицы. Условие WHERE ep.EmployeeId IS NULL позволяет отфильтровать только тех, кто остался без проекта.
