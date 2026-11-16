@@ -72,3 +72,60 @@ Date: ...
 
 Release v1.0.0
 ```
+
+## Task 49 — Восстановление через reflog
+
+### Commands
+```text
+$ git commit -m "feat: important work"
+[main a1b2c3d] feat: important work
+
+$ git reset --hard HEAD~1
+HEAD is now at f6g7h8i previous commit
+
+$ git reflog
+f6g7h8i HEAD@{0}: reset: moving to HEAD~1
+a1b2c3d HEAD@{1}: commit: feat: important work  <-- Потерянный коммит!
+
+$ git reset --hard a1b2c3d
+HEAD is now at a1b2c3d feat: important work
+```
+
+## Task 50 — Симуляция git bisect
+
+### Описание процесса
+`git bisect` используется для поиска коммита, который внес баг (сломал программу). Это бинарный поиск по истории коммитов, который позволяет найти проблему за `log2(N)` шагов (например, среди 100 коммитов — всего за 7 шагов).
+
+### Commands (эмуляция)
+```text
+# 1. Запускаем процесс поиска
+$ git bisect start
+
+# 2. Помечаем текущий коммит как "плохой" (в нем есть баг)
+$ git bisect bad
+
+# 3. Указываем старый коммит, в котором код точно работал ("хороший")
+$ git bisect good a1b2c3d
+
+# 4. Git переключает нас на коммит в середине между good и bad
+Bisecting: 5 revisions left to test after this (roughly 3 steps)
+[7a8b9c0] feat: some middle commit
+
+# 5. Мы проверяем код. Если он работает — говорим good
+$ git bisect good
+Bisecting: 2 revisions left to test after this (roughly 1 step)
+[4d5e6f7] feat: another commit
+
+# 6. Проверяем снова. Если код сломан — говорим bad
+$ git bisect bad
+
+# 7. Git находит первый "плохой" коммит
+b2c3d4e is the first bad commit
+commit b2c3d4e
+Author: ...
+Date: ...
+    feat: добавил функцию, которая сломала программу
+
+# 8. Завершаем поиск и возвращаемся в исходное состояние
+$ git bisect reset
+```
