@@ -34,3 +34,15 @@
 
 ### Итог:
 Навыки работы с PR, squash-merge и понимание того, как объединять коммиты, закреплены.
+
+## Task 46 — git stash / stash pop
+
+### Commands
+- Внес изменения в `README.md`.
+- `git stash` (спрятал изменения).
+- `git stash list` (проверил список).
+- `git stash pop` (достал изменения обратно).
+
+### Output (git stash list)
+```text
+stash@{0}: WIP on main: 8d12ae1 feat: complete levels 1-3 and update menu
