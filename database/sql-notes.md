@@ -180,3 +180,48 @@ ORDER BY DepartmentId ASC, Salary DESC;
 
 Вывод
 Освоил TOP для ограничения количества строк и ORDER BY для сортировки. Понял, как работает сортировка по нескольким столбцам сразу: сначала данные упорядочиваются по отделу, а внутри каждого отдела — по зарплате (по убыванию).
+
+## Task 05 — Агрегация: COUNT, SUM, AVG, MIN, MAX
+
+### SQL
+
+```sql
+USE PracticeDB;
+GO
+
+-- 1. Общее количество сотрудников
+SELECT COUNT(*) AS TotalEmployees FROM Employees;
+
+-- 2. Сумма всех зарплат
+SELECT SUM(Salary) AS TotalSalary FROM Employees;
+
+-- 3. Средняя зарплата (округленная до 2 знаков)
+SELECT ROUND(AVG(Salary), 2) AS AverageSalary FROM Employees;
+
+-- 4. Минимальная и максимальная зарплата
+SELECT MIN(Salary) AS MinSalary, MAX(Salary) AS MaxSalary FROM Employees;
+
+-- 5. Количество сотрудников с зарплатой > 50000
+SELECT COUNT(*) AS RichEmployees FROM Employees WHERE Salary > 50000;
+```
+
+Результат
+
+Всего сотрудников:
+* 10
+
+Сумма всех зарплат:
+* 594 000.00
+
+Средняя зарплата:
+* 59 400.00
+
+Минимальная и максимальная зарплата:
+* Минимум: 43 000.00
+* Максимум: 90 000.00
+
+Сотрудников с зарплатой > 50000:
+* 7
+
+Вывод
+Освоил агрегатные функции: COUNT (подсчет строк), SUM (сумма), AVG (среднее), MIN и MAX (минимум и максимум). Также использовал ROUND для округления результата до двух знаков.
