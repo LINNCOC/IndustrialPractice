@@ -50,3 +50,25 @@ stash@{0}: WIP on main: 8d12ae1 feat: complete levels 1-3 and update menu
 
 ## Task 47 — rebase -i (сквош коммитов)
 Выполнил объединение коммитов через `git rebase`. В интерактивном редакторе заменил `pick` на `squash` для объединения четырех мелких коммитов в один. Это позволяет держать историю в `main` чистой (один коммит = одна завершенная задача).
+
+## Task 48 — Git теги (v1.0.0)
+
+### Commands
+Так как тег необходимо было создать в удаленном репозитории, я использовал веб-интерфейс GitHub (раздел Releases).
+1. Перешел в раздел "Releases" -> "Draft a new release".
+2. В поле "Choose a tag" указал `v1.0.0`.
+3. Указал заголовок релиза "Release v1.0.0" и опубликовал.
+
+### Output (git tag / git show)
+Локально команды эквивалентны:
+```text
+$ git tag
+v1.0.0
+
+$ git show v1.0.0
+tag v1.0.0
+Tagger: LINNCOC <email>
+Date: ...
+
+Release v1.0.0
+```
