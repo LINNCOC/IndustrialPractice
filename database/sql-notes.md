@@ -378,3 +378,50 @@ WHERE ep.EmployeeId IS NULL;
 
 Вывод
 * Освоил LEFT JOIN. В отличие от INNER JOIN, он возвращает все строки из левой таблицы (Employees), даже если для них нет совпадений в правой таблице (EmployeeProjects). Сотрудники без проектов получают NULL в полях правой таблицы. Условие WHERE ep.EmployeeId IS NULL позволяет отфильтровать только тех, кто остался без проекта.
+
+## Task 10 — Множественный JOIN: сотрудники, отделы, проекты
+
+### SQL
+
+```sql
+USE PracticeDB;
+GO
+
+SELECT 
+    e.EmployeeName, 
+    d.DepartmentName, 
+    p.ProjectName, 
+    ep.Hours
+FROM Employees e
+INNER JOIN Departments d ON e.DepartmentId = d.DepartmentId
+INNER JOIN EmployeeProjects ep ON e.EmployeeId = ep.EmployeeId
+INNER JOIN Projects p ON ep.ProjectId = p.ProjectId
+ORDER BY d.DepartmentName ASC, e.EmployeeName ASC, p.ProjectName ASC;
+```
+
+Результат
+
+Аналитика:
+* Дмитрий Орлов — Data Warehouse (70 ч.)
+* Дмитрий Орлов — AI Assistant (50 ч.)
+* Елена Волкова — Mobile App (95 ч.)
+* Ольга Смирнова — Data Warehouse (110 ч.)
+
+Менеджмент:
+* Алексей Лебедев — CRM System (30 ч.)
+* Алексей Лебедев — AI Assistant (200 ч.)
+
+Разработка:
+* Анна Иванова — CRM System (120 ч.)
+* Анна Иванова — Data Warehouse (80 ч.)
+* Иван Петров — Legacy Refactor (40 ч.)
+* Иван Петров — Mobile App (90 ч.)
+* Мария Кузнецова — Mobile App (100 ч.)
+* Пётр Сидоров — AI Assistant (60 ч.)
+* Пётр Сидоров — CRM System (150 ч.)
+
+Тестирование:
+* Сергей Морозов — Legacy Refactor (130 ч.)
+
+Вывод
+* Освоил множественный JOIN (соединение 4 таблиц в одном запросе). Понял, как работают цепочки INNER JOIN: каждая следующая таблица присоединяется по внешнему ключу к предыдущей. Это позволяет получить полную картину связей «многие-ко-многим» через промежуточную таблицу EmployeeProjects.
