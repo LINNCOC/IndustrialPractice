@@ -425,3 +425,34 @@ ORDER BY d.DepartmentName ASC, e.EmployeeName ASC, p.ProjectName ASC;
 
 Вывод
 * Освоил множественный JOIN (соединение 4 таблиц в одном запросе). Понял, как работают цепочки INNER JOIN: каждая следующая таблица присоединяется по внешнему ключу к предыдущей. Это позволяет получить полную картину связей «многие-ко-многим» через промежуточную таблицу EmployeeProjects.
+
+## Task 11 — Self-join: иерархия руководителей
+
+### SQL
+
+```sql
+USE PracticeDB;
+GO
+
+SELECT 
+    e.EmployeeName, 
+    m.EmployeeName AS ManagerName
+FROM Employees e
+LEFT JOIN Employees m ON e.ManagerId = m.EmployeeId;
+```
+
+Результат
+
+* Анна Иванова — NULL
+* Пётр Сидоров — NULL
+* Мария Кузнецова — Пётр Сидоров
+* Иван Петров — Анна Иванова
+* Ольга Смирнова — NULL
+* Дмитрий Орлов — Ольга Смирнова
+* Елена Волкова — NULL
+* Сергей Морозов — NULL
+* Наталья Соколова — Алексей Лебедев
+* Алексей Лебедев — NULL
+
+Вывод
+* Использовал LEFT JOIN таблицы Employees на саму себя (Self-join), чтобы получить имя руководителя. Для тех, у кого ManagerId равен NULL, руководитель отображается как NULL.
