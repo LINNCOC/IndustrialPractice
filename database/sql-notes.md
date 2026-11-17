@@ -1097,8 +1097,6 @@ namespace DbPractice
     {
         static async Task Main(string[] args)
         {
-            // Строка подключения. В реальной работе берется из переменной окружения!
-            // Для теста используем локальную базу (если у тебя SQL Server Express, может быть .\SQLEXPRESS)
             string connectionString = Environment.GetEnvironmentVariable("PRACTICE_DB_CONNECTION")!;
             if (string.IsNullOrEmpty(connectionString))
             {
@@ -1140,3 +1138,49 @@ namespace DbPractice
 
 ### Вывод
 * Освоил подключение к SQL Server через Microsoft.Data.SqlClient. Понял, как использовать SqlConnection, SqlCommand и SqlDataReader для чтения данных. Обязательно нужно использовать try-catch для SqlException.
+
+## Task 29 — C# + SQL: параметризованный INSERT
+
+### C# Код
+```csharp
+static async Task AddEmployee(string name, decimal salary, int departmentId)
+{
+    string connectionString = Environment.GetEnvironmentVariable("PRACTICE_DB_CONNECTION")!;
+    if (string.IsNullOrEmpty(connectionString))
+    {
+        Console.WriteLine("Ошибка: Переменная окружения PRACTICE_DB_CONNECTION не найдена!");
+        return;
+    }
+
+    try
+    {
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            await connection.OpenAsync();
+
+            string sql = "INSERT INTO Employees (EmployeeName, Salary, HireDate, DepartmentId, ManagerId) " +
+                         "VALUES (@name, @salary, GETDATE(), @deptId, NULL)";
+
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                command.Parameters.AddWithValue("@name", name);
+                command.Parameters.AddWithValue("@salary", salary);
+                command.Parameters.AddWithValue("@deptId", departmentId);
+
+                int rowsAffected = await command.ExecuteNonQueryAsync();
+                Console.WriteLine($"Добавлено строк: {rowsAffected}");
+            }
+        }
+    }
+    catch (SqlException ex)
+    {
+        Console.WriteLine($"Ошибка вставки: {ex.Message}");
+    }
+}
+```
+
+### Результат (вывод в консоль)
+<img width="466" height="378" alt="{C973284F-FE55-41E9-BD72-E2ACD4A189EF}" src="https://github.com/user-attachments/assets/3786f1a5-6784-45d9-80a6-0c6734d645b1" />
+
+### Вывод
+* Научился безопасно передавать параметры в SQL-запрос через command.Parameters.AddWithValue. Это защищает от SQL-инъекций.
