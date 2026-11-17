@@ -723,3 +723,50 @@ SELECT Salary FROM Employees WHERE EmployeeId = 2;
 
 Вывод
 * Транзакция — это "контейнер" для изменений. Если что-то пошло не так (ошибка), ROLLBACK отменяет всё, что было внутри транзакции. Если всё хорошо — COMMIT сохраняет изменения навсегда.
+
+### Задание 19. Представления (VIEW)
+
+## SQL
+```sql
+USE PracticeDB;
+GO
+
+-- Создаем VIEW
+CREATE VIEW vw_EmployeeDetails AS
+SELECT 
+    e.EmployeeName, 
+    d.DepartmentName, 
+    p.ProjectName, 
+    ep.Hours
+FROM Employees e
+JOIN Departments d ON e.DepartmentId = d.DepartmentId
+JOIN EmployeeProjects ep ON e.EmployeeId = ep.EmployeeId
+JOIN Projects p ON ep.ProjectId = p.ProjectId;
+GO
+
+-- Используем VIEW
+SELECT * FROM vw_EmployeeDetails;
+
+-- Удаляем VIEW
+DROP VIEW vw_EmployeeDetails;
+```
+
+Результат
+
+* Анна Иванова - Разработка - CRM System (120)
+* Анна Иванова - Разработка - Data Warehouse (80)
+* Пётр Сидоров - Разработка - CRM System (150) 
+* Пётр Сидоров - Разработка - AI Assistant (60)
+* Мария Кузнецова	- Разработка - Mobile App (100)
+* Иван Петров	- Разработка - Mobile App (90)
+* Иван Петров - Разработка - Legacy Refactor (40)
+* Ольга Смирнова - Аналитика - Data Warehouse (110)
+* Дмитрий Орлов - Аналитика - Data Warehouse (70)
+* Дмитрий Орлов - Аналитика - AI Assistant (50)
+* Елена Волкова - Аналитика - Mobile App (95)
+* Сергей Морозов - Тестирование - Legacy Refactor	(130)
+* Алексей Лебедев - Менеджмент - CRM System (30)
+* Алексей Лебедев - Менеджмент - AI Assistant (200)
+
+Вывод
+* VIEW — это сохраненный запрос. Он не хранит данные, а "притворяется" таблицей. Это удобно, чтобы не писать длинный JOIN каждый раз, когда нужно вывести полную информацию о сотрудниках.
