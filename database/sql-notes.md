@@ -686,3 +686,40 @@ SELECT COUNT(*) AS CountAfter FROM Employees;
 
 Вывод
 * Освоил DELETE. Главное правило: если у таблицы есть FOREIGN KEY (связь), сначала нужно удалить записи из дочерней таблицы (где ссылка), и только потом из родительской, иначе SQL выдаст ошибку.
+
+### Задание 18. Транзакции: BEGIN TRAN / COMMIT / ROLLBACK
+
+## SQL
+```sql
+USE PracticeDB;
+GO
+
+-- Откат (ROLLBACK)
+BEGIN TRANSACTION;
+SELECT Salary FROM Employees WHERE EmployeeId = 2;
+UPDATE Employees SET Salary = 99999 WHERE EmployeeId = 2;
+SELECT Salary FROM Employees WHERE EmployeeId = 2; 
+ROLLBACK TRANSACTION;
+SELECT Salary FROM Employees WHERE EmployeeId = 2;
+
+-- Фиксация (COMMIT)
+BEGIN TRANSACTION;
+UPDATE Employees SET Salary = 80000 WHERE EmployeeId = 2;
+COMMIT TRANSACTION;
+SELECT Salary FROM Employees WHERE EmployeeId = 2;
+```
+
+Результат
+
+ДО
+* Salary - 84200.00
+ВНУТРИ
+* Salary - 99999.00
+ПОСЛЕ
+* Salary - 84200.00
+
+После COMMIT
+* Salary - 80000.00
+
+Вывод
+* Транзакция — это "контейнер" для изменений. Если что-то пошло не так (ошибка), ROLLBACK отменяет всё, что было внутри транзакции. Если всё хорошо — COMMIT сохраняет изменения навсегда.
