@@ -1082,3 +1082,61 @@ FROM Employees;
 
 ### Вывод
 * `DATEDIFF` считает разницу между датами. `DATEADD` прибавляет к дате указанный интервал. `FORMAT` приводит дату к нужному строковому виду.
+
+## Task 28 — C# + SQL: подключение и SELECT
+
+### C# Код
+```csharp
+using System;
+using System.Threading.Tasks;
+using Microsoft.Data.SqlClient;
+
+namespace DbPractice
+{
+    internal class Program
+    {
+        static async Task Main(string[] args)
+        {
+            // Строка подключения. В реальной работе берется из переменной окружения!
+            // Для теста используем локальную базу (если у тебя SQL Server Express, может быть .\SQLEXPRESS)
+            string connectionString = Environment.GetEnvironmentVariable("PRACTICE_DB_CONNECTION")!;
+            if (string.IsNullOrEmpty(connectionString))
+            {
+                Console.WriteLine("Ошибка: Переменная окружения PRACTICE_DB_CONNECTION не найдена!");
+                return;
+            }
+
+            try
+            {
+                Console.WriteLine("Подключение к базе данных...");
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    await connection.OpenAsync(); // Асинхронное открытие
+                    Console.WriteLine("Успешно подключено!");
+
+                    string sql = "SELECT EmployeeName, Salary FROM Employees";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    using (SqlDataReader reader = await command.ExecuteReaderAsync())
+                    {
+                        Console.WriteLine("\nСотрудники");
+                        while (await reader.ReadAsync())
+                        {
+                            string name = reader.GetString(0);
+                            decimal salary = reader.GetDecimal(1);
+                            Console.WriteLine($"{name}: {salary}");
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine($"Ошибка SQL: {ex.Message}");
+            }
+```
+
+### Результат (вывод в консоль)
+<img width="395" height="303" alt="{B73A62BE-82A0-4266-B36F-8BD115A8038C}" src="https://github.com/user-attachments/assets/009ab2e5-8e43-49ca-bcb2-3a2df0772c9b" />
+
+### Вывод
+* Освоил подключение к SQL Server через Microsoft.Data.SqlClient. Понял, как использовать SqlConnection, SqlCommand и SqlDataReader для чтения данных. Обязательно нужно использовать try-catch для SqlException.
