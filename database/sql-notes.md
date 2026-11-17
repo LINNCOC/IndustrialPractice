@@ -591,3 +591,65 @@ UNION ALL (с дубликатами):
 
 Вывод
 * UNION удаляет дубликаты (медленнее), UNION ALL оставляет все строки (быстрее). Разница видна по количеству строк: в UNION ALL их больше.
+
+## Task 16 — UPDATE: изменение данных
+
+### SQL
+```sql
+USE PracticeDB;
+GO
+
+-- 1. Зарплата сотрудников отдела 1 (+10%)
+SELECT EmployeeName, Salary FROM Employees WHERE DepartmentId = 1; -- ДО
+UPDATE Employees SET Salary = Salary * 1.10 WHERE DepartmentId = 1;
+SELECT EmployeeName, Salary FROM Employees WHERE DepartmentId = 1; -- ПОСЛЕ
+
+-- 2. Зарплата нанятых до 2022 года (+5000)
+SELECT EmployeeName, Salary, HireDate FROM Employees WHERE HireDate < '2022-01-01'; -- ДО
+UPDATE Employees SET Salary = Salary + 5000 WHERE HireDate < '2022-01-01';
+SELECT EmployeeName, Salary, HireDate FROM Employees WHERE HireDate < '2022-01-01'; -- ПОСЛЕ
+
+-- 3. Обновление HireDate одного сотрудника
+SELECT EmployeeName, HireDate FROM Employees WHERE EmployeeId = 1; -- ДО
+UPDATE Employees SET HireDate = '2021-01-01' WHERE EmployeeId = 1;
+SELECT EmployeeName, HireDate FROM Employees WHERE EmployeeId = 1; -- ПОСЛЕ
+```
+
+Результат
+
+Зарплата сотрудников отдела 1 
+ДО
+* Анна Иванова - 65000.00
+* Пётр Сидоров - 72000.00
+* Мария Кузнецова - 55000.00
+* Иван Петров	- 48000.00
+ПОСЛЕ
+* Анна Иванова - 71500.00
+* Пётр Сидоров - 79200.00
+* Мария Кузнецова	- 60500.00
+* Иван Петров	- 52800.00
+
+Зарплата нанятых до 2022 года
+ДО
+* Анна Иванова	71500.00
+* Пётр Сидоров	79200.00
+* Мария Кузнецова	60500.00
+* Ольга Смирнова	61000.00
+* Сергей Морозов	45000.00
+* Алексей Лебедев	90000.00
+ПОСЛЕ
+* Анна Иванова	76500.00
+* Пётр Сидоров	84200.00
+* Мария Кузнецова	65500.00
+* Ольга Смирнова	66000.00
+* Сергей Морозов	50000.00
+* Алексей Лебедев	95000.00
+
+Обновление HireDate одного сотрудника
+ДО
+* Анна Иванова	2020-03-15
+ПОСЛЕ
+* Анна Иванова	2021-01-01
+
+Вывод
+* Освоил UPDATE. Понял, что перед изменением данных всегда нужно делать SELECT, чтобы видеть исходное состояние, и после — чтобы убедиться, что обновились только целевые строки.
