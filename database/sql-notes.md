@@ -1011,3 +1011,42 @@ ORDER BY AvgSal DESC;
 
 ### Вывод
 * CTE (`WITH ... AS (...)`) — это временный именованный набор данных, который существует только во время выполнения запроса. Он делает сложные запросы читаемее, избавляя от вложенных подзапросов.
+
+## Task 26 — CASE: условная логика в SELECT
+
+### SQL
+```sql
+USE PracticeDB;
+GO
+
+SELECT 
+    EmployeeName, 
+    Salary,
+    CASE 
+        WHEN Salary > 60000 THEN 'High'
+        WHEN Salary BETWEEN 40000 AND 60000 THEN 'Medium'
+        ELSE 'Low'
+    END AS SalaryLevel,
+    HireDate,
+    CASE
+        WHEN HireDate < '2020-01-01' THEN 'Senior'
+        WHEN HireDate BETWEEN '2020-01-01' AND '2022-12-31' THEN 'Mid'
+        ELSE 'Junior'
+    END AS Tenure
+FROM Employees;
+```
+
+### Результат
+
+* Анна Иванова;	76500.00;	High;	2021-01-01;	Mid
+* Пётр Сидоров;	80000.00;	High;	2019-07-01;	Senior
+* Мария Кузнецова;	65500.00;	High;	2021-11-20;	Mid
+* Иван Петров;	52800.00;	Medium;	2023-02-10;	Junior
+* Ольга Смирнова;	66000.00;	High;	2020-09-05;	Mid
+* Дмитрий Орлов;	58000.00;	Medium;	2022-04-18;	Mid
+* Елена Волкова;	52000.00;	Medium;	2023-06-01;	Junior
+* Сергей Морозов;	50000.00;	Medium;	2021-12-12;	Mid
+* Алексей Лебедев;	95000.00;	High;	2018-05-25;	Senior
+
+### Вывод
+* `CASE` работает как `if-else` внутри SQL. Он позволяет создавать новые вычисляемые колонки на основе условий.
