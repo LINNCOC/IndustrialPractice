@@ -456,3 +456,35 @@ LEFT JOIN Employees m ON e.ManagerId = m.EmployeeId;
 
 Вывод
 * Использовал LEFT JOIN таблицы Employees на саму себя (Self-join), чтобы получить имя руководителя. Для тех, у кого ManagerId равен NULL, руководитель отображается как NULL.
+
+## Task 12 — Подзапросы в WHERE
+
+### SQL
+```sql
+USE PracticeDB;
+GO
+
+-- 1. Сотрудники с зарплатой выше средней
+SELECT EmployeeName, Salary
+FROM Employees
+WHERE Salary > (SELECT AVG(Salary) FROM Employees);
+
+-- 2. Сотрудники с максимальной зарплатой
+SELECT EmployeeName, Salary
+FROM Employees
+WHERE Salary = (SELECT MAX(Salary) FROM Employees);
+```
+
+Результат
+
+Выше средней:
+* Алексей Лебедев — 90 000.00
+* Пётр Сидоров — 72 000.00
+* Анна Иванова — 65 000.00
+* Ольга Смирнова — 61 000.00
+
+Максимальная зарплата:
+* Алексей Лебедев — 90 000.00
+
+Вывод
+* Использовал скалярные подзапросы в WHERE. Подзапрос (SELECT AVG(Salary) ...) вычисляется один раз и возвращает одно число, с которым сравнивается зарплата каждого сотрудника.
