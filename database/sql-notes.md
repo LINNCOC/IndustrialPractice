@@ -548,3 +548,46 @@ WHERE NOT EXISTS (SELECT 1 FROM EmployeeProjects ep WHERE ep.EmployeeId = e.Empl
 
 Вывод
 * EXISTS возвращает true, если подзапрос возвращает хотя бы одну строку. Это быстрее, чем JOIN с DISTINCT, потому что SQL Server останавливает поиск, как только находит первое совпадение.
+
+## Task 15 — UNION / UNION ALL
+
+### SQL
+```sql
+USE PracticeDB;
+GO
+
+-- 1. UNION (уникальные)
+SELECT EmployeeName, Salary FROM Employees WHERE Salary > 60000
+UNION
+SELECT EmployeeName, Salary FROM Employees WHERE HireDate < '2022-01-01';
+
+-- 2. UNION ALL (с дубликатами)
+SELECT EmployeeName, Salary FROM Employees WHERE Salary > 60000
+UNION ALL
+SELECT EmployeeName, Salary FROM Employees WHERE HireDate < '2022-01-01';
+```
+
+Результат
+
+UNION (уникальные): 
+* Алексей Лебедев - 90000.00
+* Анна Иванова - 65000.00
+* Мария Кузнецова - 55000.00
+* Ольга Смирнова - 61000.00
+* Пётр Сидоров - 72000.00
+* Сергей Морозов - 45000.00
+
+UNION ALL (с дубликатами): 
+* Анна Иванова - 65000.00
+* Пётр Сидоров - 72000.00
+* Ольга Смирнова - 61000.00
+* Алексей Лебедев - 90000.00
+* Анна Иванова - 65000.00
+* Пётр Сидоров - 72000.00
+* Мария Кузнецова - 55000.00
+* Ольга Смирнова - 61000.00
+* Сергей Морозов - 45000.00
+* Алексей Лебедев - 90000.00
+
+Вывод
+* UNION удаляет дубликаты (медленнее), UNION ALL оставляет все строки (быстрее). Разница видна по количеству строк: в UNION ALL их больше.
