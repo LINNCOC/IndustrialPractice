@@ -519,3 +519,32 @@ FROM Employees e;
 
 Вывод
 * Использовал коррелированный подзапрос в SELECT. Для каждой строки вычисляется средняя зарплата именно для его отдела, и разница округляется до 2 знаков.
+
+## Task 14 — EXISTS / NOT EXISTS
+
+### SQL
+```sql
+USE PracticeDB;
+GO
+
+-- 1. Есть проекты
+SELECT e.EmployeeName
+FROM Employees e
+WHERE EXISTS (SELECT 1 FROM EmployeeProjects ep WHERE ep.EmployeeId = e.EmployeeId);
+
+-- 2. Нет проектов
+SELECT e.EmployeeName
+FROM Employees e
+WHERE NOT EXISTS (SELECT 1 FROM EmployeeProjects ep WHERE ep.EmployeeId = e.EmployeeId);
+```
+
+Результат
+
+Есть проекты (8 человек):
+* Анна Иванова, Пётр Сидоров, Мария Кузнецова, Иван Петров, Ольга Смирнова, Дмитрий Орлов, Елена Волкова, Сергей Морозов, Алексей Лебедев.
+
+Нет проектов:
+* Наталья Соколова
+
+Вывод
+* EXISTS возвращает true, если подзапрос возвращает хотя бы одну строку. Это быстрее, чем JOIN с DISTINCT, потому что SQL Server останавливает поиск, как только находит первое совпадение.
