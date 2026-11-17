@@ -1184,3 +1184,62 @@ static async Task AddEmployee(string name, decimal salary, int departmentId)
 
 ### Вывод
 * Научился безопасно передавать параметры в SQL-запрос через command.Parameters.AddWithValue. Это защищает от SQL-инъекций.
+
+## Task 30 — C# + SQL: мини-отчёт по отделам
+
+### C# Код
+```csharp
+static async Task PrintDepartmentReport()
+{
+    string connectionString = Environment.GetEnvironmentVariable("PRACTICE_DB_CONNECTION")!;
+    if (string.IsNullOrEmpty(connectionString))
+    {
+        Console.WriteLine("Ошибка: Переменная окружения PRACTICE_DB_CONNECTION не найдена!");
+        return;
+    }
+
+    try
+    {
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            await connection.OpenAsync();
+
+            string sql = @"
+        SELECT d.DepartmentName, 
+               COUNT(e.EmployeeId) AS EmpCount, 
+               AVG(e.Salary) AS AvgSalary 
+        FROM Departments d 
+        LEFT JOIN Employees e ON d.DepartmentId = e.DepartmentId 
+        GROUP BY d.DepartmentName";
+
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            using (SqlDataReader reader = await command.ExecuteReaderAsync())
+            {
+                Console.WriteLine("\nОтчет по отделам");
+                Console.WriteLine($"{"Отдел",-15} | {"Сотрудников",-12} | {"Средняя ЗП",-10}");
+                Console.WriteLine(new string('-', 45));
+
+                while (await reader.ReadAsync())
+                {
+                    string deptName = reader.GetString(0);
+                    int count = reader.GetInt32(1);
+                    decimal avg = reader.IsDBNull(2) ? 0 : reader.GetDecimal(2);
+
+                    Console.WriteLine($"{deptName,-15} | {count,-12} | {avg,-10:F2}");
+                }
+            }
+        }
+    }
+    catch (SqlException ex)
+    {
+        Console.WriteLine($"Ошибка отчета: {ex.Message}");
+    }
+}
+```
+
+### Результат (вывод в консоль)
+
+<img width="492" height="195" alt="{7D72D2C2-9CEF-411F-B578-2FAA591F0B4E}" src="https://github.com/user-attachments/assets/c418ff10-fbc0-468d-80ce-421b053c5e15" />
+
+### Вывод
+* Освоил выполнение сложных запросов с агрегатными функциями и LEFT JOIN через SqlCommand.ExecuteReader. Понял, как обрабатывать NULL значения через reader.IsDBNull() и форматировать вывод в консоли.
