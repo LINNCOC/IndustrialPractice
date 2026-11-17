@@ -910,3 +910,34 @@ SELECT * FROM fn_GetEmployeesBySalaryRange(50000, 70000);
 
 ### Вывод
 * Скалярные функции возвращают одно значение и используются в `SELECT`. Табличные функции возвращают таблицу и используются в `FROM`, как обычная таблица.
+
+## Task 23 — Оконные функции: ROW_NUMBER, RANK, DENSE_RANK
+
+### SQL
+```sql
+USE PracticeDB;
+GO
+
+SELECT 
+    EmployeeName, 
+    DepartmentId, 
+    Salary,
+    ROW_NUMBER() OVER (ORDER BY Salary DESC) AS RowNum,
+    RANK() OVER (PARTITION BY DepartmentId ORDER BY Salary DESC) AS RankInDept,
+    DENSE_RANK() OVER (ORDER BY Salary DESC) AS DenseRank
+FROM Employees;
+```
+
+### Результат
+* Пётр Сидоров - 1 ; 80000.00 ; 2 ; 1 ;2
+* Анна Иванова - 1 ; 76500.00 ; 3 ; 2 ; 3
+* Мария Кузнецова - 1 ; 65500.00 ; 5 ; 3 ; 5
+* Иван Петров - 1 ; 52800.00 ; 7 ; 4 ; 7
+* Ольга Смирнова - 2 ; 66000.00 ; 4 ; 1 ; 4
+* Дмитрий Орлов - 2 ; 58000.00 ; 6 ; 2 ; 6
+* Елена Волкова - 2 ; 52000.00 ; 8 ; 3 ; 8
+* Сергей Морозов - 3 ; 50000.00 ; 9 ; 1 ; 9
+* Алексей Лебедев - 4 ; 95000.00 ; 1 ; 1 ; 1
+
+### Вывод
+Оконные функции позволяют делать вычисления (ранжирование) без группировки (`GROUP BY`). `PARTITION BY` делит данные на группы (как отделы).
