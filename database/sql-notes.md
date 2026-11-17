@@ -653,3 +653,36 @@ SELECT EmployeeName, HireDate FROM Employees WHERE EmployeeId = 1; -- ПОСЛЕ
 
 Вывод
 * Освоил UPDATE. Понял, что перед изменением данных всегда нужно делать SELECT, чтобы видеть исходное состояние, и после — чтобы убедиться, что обновились только целевые строки.
+
+### Задание 17. DELETE: удаление данных
+
+### SQL
+```sql
+USE PracticeDB;
+GO
+
+-- Проверка до
+SELECT COUNT(*) AS CountBefore FROM EmployeeProjects WHERE Hours = 0; 
+
+-- Удалить назначения с Hours = 0 (если есть)
+DELETE FROM EmployeeProjects WHERE Hours = 0;
+
+-- Удалить сотрудника 
+-- Выберем, например, EmployeeId = 9 
+DELETE FROM EmployeeProjects WHERE EmployeeId = 9;
+DELETE FROM Employees WHERE EmployeeId = 9;
+
+-- Проверка после
+SELECT COUNT(*) AS CountAfter FROM Employees;
+```
+
+Результат
+
+Проверка до 
+* 0 записей с Hours = 0.
+
+Проверка после
+* удален 1 сотрудник (ID=9) и его назначения. В таблице Employees осталось 9 строк.
+
+Вывод
+* Освоил DELETE. Главное правило: если у таблицы есть FOREIGN KEY (связь), сначала нужно удалить записи из дочерней таблицы (где ссылка), и только потом из родительской, иначе SQL выдаст ошибку.
