@@ -1,6 +1,7 @@
 using industrialpractice.Common;
 using industrialpractice.Tasks.Level1;
 using industrialpractice.Tasks.Level2;
+using industrialpractice.Tasks.Level3;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -113,26 +114,73 @@ namespace industrialpractice.Menu
                 string UserChoiceForLevel2 = Console.ReadLine();
                 switch (UserChoiceForLevel2)
                 {
-                    case "16": RunTask (new Task16_StringExtensions()); break;
-                    case "17": RunTask (new Task17_StringBuilderVsConcat()); break;
-                    case "18": RunTask (new Task18_TryParseVsTryCatch()); break;
-                    case "19": RunTask (new Task19_MyCollections()); break;
-                    case "20": RunTask (new Task20_Generics()); break;
-                    case "21": RunTask (new Task21_WeekdaysEnum()); break;
-                    case "22": RunTask (new Task22_ParamsOverload()); break;
-                    case "23": RunTask (new Task23_NullableTypes()); break;
-                    case "24": RunTask (new Task24_AnimalHierarchy()); break;
-                    case "25": RunTask (new Task25_ShapeSorting()); break;
-                    case "26": RunTask (new Task26_StrategyPattern()); break;
-                    case "27": RunTask (new Task27_StudentSorting()); break;
-                    case "28": RunTask (new Task28_PointEquals()); break;
-                    case "29": RunTask (new Task29_FactoryPattern()); break;
-                    case "30": RunTask (new Task30_BankAccount()); break;
-                    case "31": RunTask (new Task31_DisposableFileWriter()); break;
-                    case "32": RunTask (new Task32_Temperature()); break;
-                    case "33": RunTask (new Task33_LinqEmployees()); break;
-                    case "34": RunTask (new Task34_LinqGrouping()); break;
+                    case "16": RunTask(new Task16_StringExtensions()); break;
+                    case "17": RunTask(new Task17_StringBuilderVsConcat()); break;
+                    case "18": RunTask(new Task18_TryParseVsTryCatch()); break;
+                    case "19": RunTask(new Task19_MyCollections()); break;
+                    case "20": RunTask(new Task20_Generics()); break;
+                    case "21": RunTask(new Task21_WeekdaysEnum()); break;
+                    case "22": RunTask(new Task22_ParamsOverload()); break;
+                    case "23": RunTask(new Task23_NullableTypes()); break;
+                    case "24": RunTask(new Task24_AnimalHierarchy()); break;
+                    case "25": RunTask(new Task25_ShapeSorting()); break;
+                    case "26": RunTask(new Task26_StrategyPattern()); break;
+                    case "27": RunTask(new Task27_StudentSorting()); break;
+                    case "28": RunTask(new Task28_PointEquals()); break;
+                    case "29": RunTask(new Task29_FactoryPattern()); break;
+                    case "30": RunTask(new Task30_BankAccount()); break;
+                    case "31": RunTask(new Task31_DisposableFileWriter()); break;
+                    case "32": RunTask(new Task32_Temperature()); break;
+                    case "33": RunTask(new Task33_LinqEmployees()); break;
+                    case "34": RunTask(new Task34_LinqGrouping()); break;
                     case "35": Console.WriteLine("Задание 35 выполнено через Git"); break;
+                }
+            }
+        }
+            public void ShowLevel3Menu()
+            {
+                while (true)
+                {
+                    Console.Clear();
+                    Console.WriteLine("--- Уровень 3: Продвинутый ---");
+                    Console.WriteLine("36. Дубликаты в List");
+                    Console.WriteLine("37. Мемоизация Фибоначчи");
+                    Console.WriteLine("38. List<T> vs LinkedList<T>");
+                    Console.WriteLine("39. yield return — генератор");
+                    Console.WriteLine("40. async/await + исключения");
+                    Console.WriteLine("41. Task.WhenAll — параллельно");
+                    Console.WriteLine("42. CancellationToken");
+                    Console.WriteLine("43. Порядок catch");
+                    Console.WriteLine("44. Todo List");
+                    Console.WriteLine("45. Библиотека");
+                    Console.WriteLine("46-50. Git-задания (см. git-notes.md)");
+                    Console.WriteLine("0. Назад");
+                    Console.WriteLine("\nВыберите номер");
+
+                    string UserChoice = Console.ReadLine();
+
+                switch (UserChoice)
+                {
+                    default: Console.WriteLine("Неверный выбор. Нажмите Enter"); Console.ReadKey(); break;
+                    case "0": return;
+                    case "36": RunTask(new Task36_Duplicates()); break;
+                    case "37": RunTask(new Task37_Fibonacci()); break;
+                    case "38": RunTask(new Task38_ListVsLinkedList()); break;
+                    case "39": RunTask(new Task39_YieldGenerator()); break;
+                    case "40": RunTask(new Task40_AsyncAwait()); break;
+                    case "41": RunTask(new Task41_TaskWhenAll()); break;
+                    case "42": RunTask(new Task42_CancellationToken()); break;
+                    case "43": RunTask(new Task43_ExceptionHierarchy()); break;
+                    case "44": RunTask(new Task44_TodoList()); break;
+                    case "45": RunTask(new Task45_LibraryTests()); break;
+                    case "46":
+                    case "47":
+                    case "48":
+                    case "49":
+                    case "50":
+                        Console.WriteLine("Git-задания 46-50 выполнены. Отчет в файле git-notes.md.");
+                        Console.ReadKey();
+                        break;
                 }
             }
         }
