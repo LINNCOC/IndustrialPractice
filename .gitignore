@@ -4,3 +4,8 @@ obj/
 *.user
 *.suo
 .idea/
+*.mdf
+*.ldf
+*.bak
+.env
+appsettings.Development.json
